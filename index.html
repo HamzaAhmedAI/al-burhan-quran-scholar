@@ -172,6 +172,10 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
+    /* Founder photo subtle zoom on hover */
+    .founder-photo { transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 700ms ease; }
+    .founder-frame:hover .founder-photo { transform: scale(1.03); }
+
     /* Scrollbar */
     ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-track { background: #070a18; }
@@ -590,15 +594,42 @@
             <div class="pointer-events-none absolute -top-24 left-1/2 h-48 w-[120%] -translate-x-1/2 arch bg-gradient-to-b from-emerald-500/10 to-transparent"></div>
 
             <div class="relative grid items-center gap-10 md:grid-cols-5">
-              <!-- Avatar / monogram -->
+              <!-- Founder photo: portrait on desktop, banner on mobile -->
               <div class="md:col-span-2">
-                <div class="relative mx-auto h-48 w-48 sm:h-56 sm:w-56">
-                  <div class="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-500/30 via-gold/20 to-indigo-500/30 blur-2xl"></div>
-                  <div class="relative grid h-full w-full place-items-center rounded-full border border-white/10 bg-gradient-to-br from-midnight-800 to-midnight-900">
-                    <div class="text-center">
-                      <div class="font-display text-5xl font-bold text-gradient-static sm:text-6xl">HA</div>
-                      <div class="mt-1 text-[10px] uppercase tracking-[0.3em] text-emerald-300/80">Founder & Creator</div>
-                    </div>
+                <!-- Mobile banner -->
+                <div class="relative overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-card md:hidden">
+                  <div class="absolute -inset-px rounded-2xl bg-gradient-to-tr from-emerald-500/20 via-transparent to-gold/20"></div>
+                  <img
+                    src="./founder.jpg"
+                    alt="Hamza Ahmed — Founder & Creator of Al-Burhan Quran Scholar"
+                    class="relative h-56 w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="566"
+                  />
+                  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-midnight-900/80 to-transparent"></div>
+                </div>
+
+                <!-- Desktop portrait card -->
+                <div class="founder-frame relative mx-auto hidden max-w-xs overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-card transition md:block">
+                  <div class="absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/30 via-gold/20 to-indigo-500/30 blur-xl"></div>
+                  <picture>
+                    <source media="(min-width: 768px)" srcset="./founder-portrait.jpg" />
+                    <img
+                      src="./founder.jpg"
+                      alt="Hamza Ahmed — Founder & Creator of Al-Burhan Quran Scholar"
+                      class="founder-photo relative aspect-[4/5] w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width="800"
+                      height="1000"
+                    />
+                  </picture>
+                  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-midnight-900/70 to-transparent"></div>
+                  <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <span class="rounded-full border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-200 backdrop-blur">Founder</span>
+                    <span class="rounded-full border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-gold backdrop-blur">Creator</span>
                   </div>
                 </div>
               </div>
