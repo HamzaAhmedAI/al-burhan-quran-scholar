@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Al-Burhan Quran Scholar — Deep Quranic Research, Classical Tafsirs & Multidimensional Insights</title>
+  <meta name="description" content="Al-Burhan Quran Scholar — an Android app delivering four-layer scholarly Quranic analysis, classical tafsirs (Al-Razi, Ibn Kathir, Al-Qurtubi), Roman Urdu translation, and AI-powered thematic exploration. Built by Hamza Ahmed." />
+  <meta name="theme-color" content="#0b1020" />
+  <meta property="og:title" content="Al-Burhan Quran Scholar" />
+  <meta property="og:description" content="Deep Quranic Research, Classical Tafsirs, and Multidimensional Empirical Insights." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Fonts: Inter + Plus Jakarta Sans (UI) + Amiri (Arabic/serif flourishes) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'sans-serif'],
+            arabic: ['Amiri', 'Georgia', 'serif'],
+          },
+          colors: {
+            midnight: {
+              950: '#070a18',
+              900: '#0b1020',
+              800: '#101733',
+              700: '#172046',
+            },
+            emerald: {
+              glow: '#10b981',
+            },
+            gold: {
+              DEFAULT: '#d4af37',
+              soft: '#e8c869',
+            },
+          },
+          boxShadow: {
+            'glow-emerald': '0 0 40px -10px rgba(16,185,129,0.45)',
+            'glow-gold': '0 0 40px -10px rgba(212,175,55,0.45)',
+            'card': '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 30px 60px -30px rgba(0,0,0,0.6)',
+          },
+          backgroundImage: {
+            'grid-fade': 'radial-gradient(ellipse at top, rgba(16,185,129,0.10), transparent 60%), radial-gradient(ellipse at bottom, rgba(212,175,55,0.08), transparent 60%)',
+          },
+          animation: {
+            'float-slow': 'float 9s ease-in-out infinite',
+            'float-slower': 'float 13s ease-in-out infinite',
+            'shimmer': 'shimmer 6s linear infinite',
+            'pulse-soft': 'pulseSoft 4s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%,100%': { transform: 'translateY(0px) translateX(0px)' },
+              '50%': { transform: 'translateY(-20px) translateX(10px)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+            pulseSoft: {
+              '0%,100%': { opacity: '0.35' },
+              '50%': { opacity: '0.7' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    html, body {
+      background-color: #070a18;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    .font-arabic  { font-family: 'Amiri', Georgia, serif; }
+
+    /* Subtle starfield overlay */
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.25), transparent 50%),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.18), transparent 50%),
+        radial-gradient(1.5px 1.5px at 40% 80%, rgba(212,175,55,0.18), transparent 50%),
+        radial-gradient(1px 1px at 85% 20%, rgba(16,185,129,0.22), transparent 50%),
+        radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.20), transparent 50%);
+    }
+
+    /* Glassmorphism card */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .glass-hover {
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .glass-hover:hover {
+      transform: translateY(-4px);
+      border-color: rgba(16,185,129,0.35);
+      box-shadow: 0 30px 60px -30px rgba(16,185,129,0.35), 0 0 0 1px rgba(16,185,129,0.15) inset;
+    }
+
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(120deg, #ffffff 0%, #e8c869 35%, #10b981 70%, #ffffff 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 6s linear infinite;
+    }
+    .text-gradient-static {
+      background: linear-gradient(120deg, #ffffff 0%, #e8c869 40%, #10b981 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Decorative arch (Islamic motif) */
+    .arch {
+      border-top-left-radius: 9999px;
+      border-top-right-radius: 9999px;
+    }
+
+    /* Glow ring around hero device */
+    .hero-glow::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      background: conic-gradient(from 0deg, #10b981, #d4af37, #6366f1, #10b981);
+      filter: blur(30px);
+      opacity: 0.5;
+      z-index: -1;
+      animation: spin 18s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Btn shine */
+    .btn-shine { position: relative; overflow: hidden; }
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -120%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.7s ease;
+    }
+    .btn-shine:hover::after { left: 130%; }
+
+    /* Section reveal */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #070a18; }
+    ::-webkit-scrollbar-thumb { background: #1f2a4a; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2a3a66; }
+
+    /* Arabic decorative divider */
+    .ar-divider {
+      font-family: 'Amiri', serif;
+      letter-spacing: 0.5em;
+      color: rgba(212,175,55,0.5);
+    }
+  </style>
+</head>
+
+<body class="bg-midnight-950 text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-100">
+
+  <!-- Ambient background layers -->
+  <div class="fixed inset-0 -z-10 bg-grid-fade"></div>
+  <div class="fixed inset-0 -z-10 stars opacity-60"></div>
+  <div class="pointer-events-none fixed -top-40 -left-40 -z-10 h-[480px] w-[480px] rounded-full bg-emerald-500/10 blur-3xl animate-float-slow"></div>
+  <div class="pointer-events-none fixed top-1/3 -right-40 -z-10 h-[520px] w-[520px] rounded-full bg-indigo-500/10 blur-3xl animate-float-slower"></div>
+  <div class="pointer-events-none fixed bottom-0 left-1/3 -z-10 h-[420px] w-[420px] rounded-full bg-gold/10 blur-3xl animate-pulse-soft"></div>
+
+  <!-- ============== NAVBAR ============== -->
+  <header class="sticky top-0 z-50">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <nav class="glass mt-4 flex items-center justify-between rounded-2xl px-4 py-3 sm:px-6 sm:py-3.5">
+        <a href="#top" class="flex items-center gap-2.5 group">
+          <span class="relative grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-gold/20 ring-1 ring-white/10">
+            <i data-lucide="book-open-text" class="h-5 w-5 text-emerald-300"></i>
+            <span class="absolute -inset-px rounded-xl ring-1 ring-emerald-400/0 group-hover:ring-emerald-400/40 transition"></span>
+          </span>
+          <div class="leading-tight">
+            <div class="font-display text-sm font-semibold tracking-tight text-white">Al-Burhan</div>
+            <div class="text-[10px] uppercase tracking-[0.18em] text-emerald-300/80">Quran Scholar</div>
+          </div>
+        </a>
+
+        <div class="hidden items-center gap-7 text-sm text-slate-300 md:flex">
+          <a href="#features" class="hover:text-white transition">Features</a>
+          <a href="#tafsir" class="hover:text-white transition">Tafsir Library</a>
+          <a href="#founder" class="hover:text-white transition">Founder</a>
+          <a href="#download" class="hover:text-white transition">Download</a>
+        </div>
+
+        <a href="#download"
+           class="btn-shine group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 px-3.5 py-2 text-sm font-semibold text-midnight-950 shadow-glow-emerald hover:shadow-[0_0_50px_-10px_rgba(16,185,129,0.7)] transition">
+          <i data-lucide="download" class="h-4 w-4"></i>
+          <span>Get APK</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============== HERO ============== -->
+  <main id="top">
+    <section class="relative overflow-hidden">
+      <div class="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-8 sm:pt-24 sm:pb-32">
+        <div class="grid items-center gap-14 lg:grid-cols-12">
+
+          <!-- Copy -->
+          <div class="reveal lg:col-span-7">
+            <!-- App badge -->
+            <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1.5 text-xs font-medium text-emerald-200 backdrop-blur">
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+              </span>
+              <span class="tracking-wide">Now in early access · Android</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-display mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+              <span class="text-gradient">Al-Burhan</span>
+              <span class="block">Quran Scholar</span>
+            </h1>
+
+            <!-- Arabic flourish -->
+            <p class="font-arabic mt-4 text-2xl text-gold-soft/90 sm:text-3xl" dir="rtl" lang="ar">
+              ﴿ وَلَوْ أَنَّمَا فِي الْأَرْضِ مِن شَجَرَةٍ أَقْلَامٌ وَالْبَحْرُ يَمُدُّهُ مِن بَعْدِهِ سَبْعَةُ أَبْحُرٍ مَّا نَفِدَتْ كَلِمَاتُ اللَّهِ ﴾
+            </p>
+
+            <!-- Tagline -->
+            <p class="mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
+              <span class="text-white font-medium">Deep Quranic Research, Classical Tafsirs, and Multidimensional Empirical Insights.</span>
+              A scholarly Android companion that unifies linguistic roots, classical exegesis, cosmic reflection, and practical spirituality — translated naturally into Roman Urdu and English.
+            </p>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="#download"
+                 class="btn-shine group inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 px-6 py-3.5 text-base font-semibold text-midnight-950 shadow-glow-emerald transition hover:shadow-[0_0_60px_-10px_rgba(16,185,129,0.8)]">
+                <i data-lucide="download" class="h-5 w-5"></i>
+                Download APK for Android
+                <i data-lucide="arrow-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+              </a>
+              <a href="#features"
+                 class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-3.5 text-base font-medium text-slate-200 backdrop-blur transition hover:border-emerald-400/30 hover:bg-white/[0.08] hover:text-white">
+                <i data-lucide="sparkles" class="h-5 w-5 text-gold"></i>
+                Explore the Features
+              </a>
+            </div>
+
+            <!-- Trust strip -->
+            <div class="mt-10 grid max-w-2xl grid-cols-3 gap-4 border-t border-white/5 pt-6 text-sm">
+              <div>
+                <div class="font-display text-2xl font-bold text-white">4-Layer</div>
+                <div class="mt-0.5 text-xs uppercase tracking-wider text-slate-400">Scholarly Analysis</div>
+              </div>
+              <div>
+                <div class="font-display text-2xl font-bold text-white">100%</div>
+                <div class="mt-0.5 text-xs uppercase tracking-wider text-slate-400">Offline-First</div>
+              </div>
+              <div>
+                <div class="font-display text-2xl font-bold text-white">AI</div>
+                <div class="mt-0.5 text-xs uppercase tracking-wider text-slate-400">Powered Insights</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual -->
+          <div class="reveal lg:col-span-5">
+            <div class="relative mx-auto max-w-md">
+              <!-- Glow ring -->
+              <div class="hero-glow absolute -inset-10 rounded-full"></div>
+
+              <!-- Phone mockup -->
+              <div class="relative mx-auto aspect-[9/19] w-64 rounded-[2.6rem] border border-white/10 bg-gradient-to-b from-midnight-800 to-midnight-900 p-3 shadow-2xl sm:w-72">
+                <div class="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-black"></div>
+                <div class="relative h-full w-full overflow-hidden rounded-[2rem] bg-gradient-to-b from-[#0a1129] via-[#0a0f24] to-[#070a18]">
+
+                  <!-- Status bar -->
+                  <div class="flex items-center justify-between px-5 pt-7 text-[10px] text-slate-400">
+                    <span>9:41</span>
+                    <span class="flex items-center gap-1">
+                      <i data-lucide="signal" class="h-3 w-3"></i>
+                      <i data-lucide="wifi" class="h-3 w-3"></i>
+                      <i data-lucide="battery-full" class="h-3 w-3"></i>
+                    </span>
+                  </div>
+
+                  <!-- In-app header -->
+                  <div class="mt-5 px-5">
+                    <div class="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-emerald-300/80">
+                      <i data-lucide="book-open-text" class="h-3 w-3"></i>
+                      Surah Ar-Ra'd · 13:1
+                    </div>
+                  </div>
+
+                  <!-- Arabic verse -->
+                  <div class="mt-3 px-5 text-center">
+                    <p class="font-arabic text-2xl leading-relaxed text-gold-soft" dir="rtl" lang="ar">
+                      الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ
+                    </p>
+                  </div>
+
+                  <!-- Translation card -->
+                  <div class="mt-4 mx-4 rounded-xl border border-white/10 bg-white/5 p-3">
+                    <div class="text-[10px] uppercase tracking-wider text-emerald-300/80">English</div>
+                    <p class="mt-1 text-xs text-slate-200">"Those who believe and whose hearts find rest in the remembrance of Allah."</p>
+                  </div>
+
+                  <!-- Roman Urdu card -->
+                  <div class="mt-2 mx-4 rounded-xl border border-gold/20 bg-gold/5 p-3">
+                    <div class="text-[10px] uppercase tracking-wider text-gold">Roman Urdu</div>
+                    <p class="mt-1 text-xs text-slate-200">"Wo log jo imaan laye aur unke dil Allah ki yaad se sukoon paayein."</p>
+                  </div>
+
+                  <!-- Tafsir pills -->
+                  <div class="mt-4 flex flex-wrap justify-center gap-1.5 px-4">
+                    <span class="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[9px] text-emerald-200">Linguistic Roots</span>
+                    <span class="rounded-full bg-indigo-500/15 px-2 py-0.5 text-[9px] text-indigo-200">Al-Razi</span>
+                    <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-[9px] text-amber-200">Ibn Kathir</span>
+                    <span class="rounded-full bg-rose-500/15 px-2 py-0.5 text-[9px] text-rose-200">Empirical</span>
+                  </div>
+
+                  <!-- Bottom nav -->
+                  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex w-[88%] items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-4 py-2.5 backdrop-blur">
+                    <i data-lucide="home" class="h-4 w-4 text-emerald-400"></i>
+                    <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
+                    <i data-lucide="bookmark" class="h-4 w-4 text-slate-400"></i>
+                    <i data-lucide="user" class="h-4 w-4 text-slate-400"></i>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Floating chips around phone -->
+              <div class="absolute -left-6 top-16 hidden sm:block animate-float-slow">
+                <div class="glass rounded-2xl px-3 py-2 text-xs">
+                  <div class="flex items-center gap-2 text-emerald-300">
+                    <i data-lucide="languages" class="h-3.5 w-3.5"></i>
+                    <span>Roman Urdu</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute -right-4 top-44 hidden sm:block animate-float-slower">
+                <div class="glass rounded-2xl px-3 py-2 text-xs">
+                  <div class="flex items-center gap-2 text-gold">
+                    <i data-lucide="brain-circuit" class="h-3.5 w-3.5"></i>
+                    <span>AI Thematic</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute -right-2 bottom-16 hidden sm:block animate-float-slow">
+                <div class="glass rounded-2xl px-3 py-2 text-xs">
+                  <div class="flex items-center gap-2 text-indigo-300">
+                    <i data-lucide="lock" class="h-3.5 w-3.5"></i>
+                    <span>Encrypted</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative divider -->
+        <div class="mt-20 text-center">
+          <div class="ar-divider text-lg">۞ ۞ ۞</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== FEATURES (BENTO) ============== -->
+    <section id="features" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <!-- Section header -->
+        <div class="reveal mx-auto max-w-3xl text-center">
+          <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1.5 text-xs font-medium text-emerald-200">
+            <i data-lucide="layers" class="h-3.5 w-3.5"></i>
+            Four Layers of Insight
+          </div>
+          <h2 class="font-display mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            A <span class="text-gradient-static">scholar in your pocket</span>, grounded in tradition
+          </h2>
+          <p class="mt-4 text-base text-slate-300 sm:text-lg">
+            Every ayah is unpacked across four dimensions — linguistic, classical, empirical, and spiritual — so you can study the Quran with the depth it deserves.
+          </p>
+        </div>
+
+        <!-- Bento grid -->
+        <div class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-6 md:auto-rows-[180px]">
+
+          <!-- Card 1: Four-Layer Analysis (large) -->
+          <article class="glass glass-hover reveal md:col-span-4 md:row-span-2 relative overflow-hidden rounded-3xl p-7">
+            <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl"></div>
+            <div class="relative flex h-full flex-col">
+              <div class="flex items-center gap-2 text-emerald-300">
+                <span class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/20">
+                  <i data-lucide="layers-3" class="h-5 w-5"></i>
+                </span>
+                <span class="text-xs font-semibold uppercase tracking-[0.2em]">Core Methodology</span>
+              </div>
+              <h3 class="font-display mt-5 text-2xl font-bold text-white sm:text-3xl">Four-Layer Scholarly Analysis</h3>
+              <p class="mt-3 max-w-xl text-slate-300">Every verse is studied through a rigorous multi-perspective framework — from the dictionary of roots to the rhythm of the cosmos.</p>
+
+              <div class="mt-6 grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
+                  <div class="flex items-center gap-2 text-emerald-300 text-xs uppercase tracking-wider"><i data-lucide="letter-text" class="h-3.5 w-3.5"></i> Linguistic</div>
+                  <p class="mt-2 text-sm text-slate-200">Root words, morphology & semantic fields.</p>
+                </div>
+                <div class="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
+                  <div class="flex items-center gap-2 text-amber-300 text-xs uppercase tracking-wider"><i data-lucide="library" class="h-3.5 w-3.5"></i> Classical</div>
+                  <p class="mt-2 text-sm text-slate-200">Al-Razi, Ibn Kathir, Al-Qurtubi & more.</p>
+                </div>
+                <div class="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
+                  <div class="flex items-center gap-2 text-indigo-300 text-xs uppercase tracking-wider"><i data-lucide="atom" class="h-3.5 w-3.5"></i> Empirical</div>
+                  <p class="mt-2 text-sm text-slate-200">Cosmic, biological & scientific reflections.</p>
+                </div>
+                <div class="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
+                  <div class="flex items-center gap-2 text-rose-300 text-xs uppercase tracking-wider"><i data-lucide="heart-handshake" class="h-3.5 w-3.5"></i> Spiritual</div>
+                  <p class="mt-2 text-sm text-slate-200">Practical, heart-centered takeaways.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Roman Urdu -->
+          <article class="glass glass-hover reveal md:col-span-2 md:row-span-2 relative overflow-hidden rounded-3xl p-7">
+            <div class="absolute -left-16 -bottom-16 h-56 w-56 rounded-full bg-gold/10 blur-3xl"></div>
+            <div class="relative flex h-full flex-col">
+              <div class="flex items-center gap-2 text-gold">
+                <span class="grid h-10 w-10 place-items-center rounded-xl bg-gold/15 ring-1 ring-gold/30">
+                  <i data-lucide="languages" class="h-5 w-5"></i>
+                </span>
+                <span class="text-xs font-semibold uppercase tracking-[0.2em]">Multilingual</span>
+              </div>
+              <h3 class="font-display mt-5 text-xl font-bold text-white sm:text-2xl">Roman Urdu & Multilingual Support</h3>
+              <p class="mt-3 text-sm text-slate-300">Scholarly breakdowns translated naturally — not literally — into the language you think in.</p>
+
+              <div class="mt-auto pt-6 space-y-2">
+                <div class="flex items-center justify-between rounded-xl border border-white/5 bg-black/30 px-3 py-2 text-xs">
+                  <span class="text-slate-400">اردو · Roman</span>
+                  <span class="text-gold">Native</span>
+                </div>
+                <div class="flex items-center justify-between rounded-xl border border-white/5 bg-black/30 px-3 py-2 text-xs">
+                  <span class="text-slate-400">English</span>
+                  <span class="text-emerald-300">Fluent</span>
+                </div>
+                <div class="flex items-center justify-between rounded-xl border border-white/5 bg-black/30 px-3 py-2 text-xs">
+                  <span class="text-slate-400">العربية</span>
+                  <span class="text-indigo-300">Original</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: AI Integration -->
+          <article class="glass glass-hover reveal md:col-span-3 relative overflow-hidden rounded-3xl p-7">
+            <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-indigo-500/10 blur-3xl"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2 text-indigo-300">
+                <span class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-500/15 ring-1 ring-indigo-400/20">
+                  <i data-lucide="brain-circuit" class="h-5 w-5"></i>
+                </span>
+                <span class="text-xs font-semibold uppercase tracking-[0.2em]">AI Engine</span>
+              </div>
+              <h3 class="font-display mt-4 text-xl font-bold text-white">OpenRouter & Gemini Integration</h3>
+              <p class="mt-2 max-w-md text-sm text-slate-300">Powered by advanced AI for deep thematic exploration and smart parsing across the entire corpus.</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">Thematic Threads</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">Smart Parsing</span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-200">Cross-Verse Links</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Secure Local DB -->
+          <article class="glass glass-hover reveal md:col-span-3 relative overflow-hidden rounded-3xl p-7">
+            <div class="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2 text-emerald-300">
+                <span class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/20">
+                  <i data-lucide="shield-check" class="h-5 w-5"></i>
+                </span>
+                <span class="text-xs font-semibold uppercase tracking-[0.2em]">Privacy-First</span>
+              </div>
+              <h3 class="font-display mt-4 text-xl font-bold text-white">Secure Local Database</h3>
+              <p class="mt-2 max-w-md text-sm text-slate-300">Offline-first architecture with encrypted local storage. Your reflections stay on your device.</p>
+              <div class="mt-4 flex items-center gap-4 text-xs text-slate-400">
+                <span class="flex items-center gap-1.5"><i data-lucide="wifi-off" class="h-3.5 w-3.5"></i> Offline-first</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="lock" class="h-3.5 w-3.5"></i> Encrypted</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="database" class="h-3.5 w-3.5"></i> On-device</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== TAFSIR LIBRARY STRIP ============== -->
+    <section id="tafsir" class="relative py-16 sm:py-20">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="reveal glass overflow-hidden rounded-3xl p-8 sm:p-12">
+          <div class="grid items-center gap-10 md:grid-cols-2">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-3 py-1.5 text-xs font-medium text-gold-soft">
+                <i data-lucide="book-marked" class="h-3.5 w-3.5"></i>
+                Tafsir Library
+              </div>
+              <h2 class="font-display mt-4 text-3xl font-bold text-white sm:text-4xl">
+                Classical Exegesis, <span class="text-gradient-static">reimagined for the digital age</span>
+              </h2>
+              <p class="mt-4 text-slate-300">
+                Read trusted tafsirs side-by-side, compare perspectives across centuries, and follow scholarly chains of reasoning — all in one place.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">الرازي</div>
+                <div class="mt-1 text-xs text-slate-400">Al-Razi</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">ابن كثير</div>
+                <div class="mt-1 text-xs text-slate-400">Ibn Kathir</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">القرطبي</div>
+                <div class="mt-1 text-xs text-slate-400">Al-Qurtubi</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">الطبري</div>
+                <div class="mt-1 text-xs text-slate-400">Al-Tabari</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">النسفي</div>
+                <div class="mt-1 text-xs text-slate-400">Al-Nasafi</div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-4 text-center">
+                <div class="font-arabic text-2xl text-gold-soft">ابن عاشور</div>
+                <div class="mt-1 text-xs text-slate-400">Ibn Ashur</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== FOUNDER ============== -->
+    <section id="founder" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="reveal mx-auto max-w-3xl text-center">
+          <div class="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-3 py-1.5 text-xs font-medium text-gold-soft">
+            <i data-lucide="crown" class="h-3.5 w-3.5"></i>
+            The Mind Behind It
+          </div>
+          <h2 class="font-display mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">About the Founder</h2>
+        </div>
+
+        <div class="reveal mx-auto mt-12 max-w-5xl">
+          <div class="glass relative overflow-hidden rounded-3xl p-8 sm:p-12">
+            <!-- Decorative arch -->
+            <div class="pointer-events-none absolute -top-24 left-1/2 h-48 w-[120%] -translate-x-1/2 arch bg-gradient-to-b from-emerald-500/10 to-transparent"></div>
+
+            <div class="relative grid items-center gap-10 md:grid-cols-5">
+              <!-- Avatar / monogram -->
+              <div class="md:col-span-2">
+                <div class="relative mx-auto h-48 w-48 sm:h-56 sm:w-56">
+                  <div class="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-500/30 via-gold/20 to-indigo-500/30 blur-2xl"></div>
+                  <div class="relative grid h-full w-full place-items-center rounded-full border border-white/10 bg-gradient-to-br from-midnight-800 to-midnight-900">
+                    <div class="text-center">
+                      <div class="font-display text-5xl font-bold text-gradient-static sm:text-6xl">HA</div>
+                      <div class="mt-1 text-[10px] uppercase tracking-[0.3em] text-emerald-300/80">Founder & Creator</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bio -->
+              <div class="md:col-span-3">
+                <h3 class="font-display text-2xl font-bold text-white sm:text-3xl">Hamza Ahmed</h3>
+                <p class="mt-1 text-sm font-medium uppercase tracking-[0.18em] text-gold-soft">Founder & Creator</p>
+                <p class="mt-5 text-slate-300">
+                  Al-Burhan Quran Scholar is a personal vision turned into a tool for the entire Ummah — combining classical scholarship, modern AI, and a deep respect for the lived experience of every Muslim studying the Quran. From linguistic roots to cosmic reflections, every feature is designed to bring you closer to the text.
+                </p>
+
+                <!-- Social links -->
+                <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <a href="https://www.instagram.com/hamza_ahmed_0fficial?igsi=bmkwdjBwbWcxMXVl" target="_blank" rel="noopener noreferrer"
+                     class="group inline-flex items-center justify-center gap-2.5 rounded-2xl border border-pink-400/20 bg-gradient-to-r from-pink-500/10 via-fuchsia-500/10 to-rose-500/10 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-pink-400/40 hover:from-pink-500/20 hover:to-rose-500/20">
+                    <i data-lucide="instagram" class="h-4 w-4 text-pink-300"></i>
+                    <span>Instagram</span>
+                    <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 text-slate-400 transition group-hover:text-pink-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/hamza-ahmed-917a17224?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer"
+                     class="group inline-flex items-center justify-center gap-2.5 rounded-2xl border border-sky-400/20 bg-gradient-to-r from-sky-500/10 via-blue-500/10 to-indigo-500/10 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-sky-400/40 hover:from-sky-500/20 hover:to-indigo-500/20">
+                    <i data-lucide="linkedin" class="h-4 w-4 text-sky-300"></i>
+                    <span>LinkedIn</span>
+                    <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 text-slate-400 transition group-hover:text-sky-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== DOWNLOAD ============== -->
+    <section id="download" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="reveal relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/10 via-midnight-900 to-indigo-500/10 p-8 sm:p-14">
+          <!-- Decorative blobs -->
+          <div class="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-gold/15 blur-3xl"></div>
+
+          <div class="relative grid items-center gap-10 md:grid-cols-2">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-200">
+                <i data-lucide="android" class="h-3.5 w-3.5"></i>
+                Android · APK
+              </div>
+              <h2 class="font-display mt-4 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+                Take the scholar with you, <span class="text-gradient-static">wherever you go</span>
+              </h2>
+              <p class="mt-4 max-w-lg text-slate-300">
+                Download the APK directly to your Android device. Lightweight, fast, and works fully offline after install.
+              </p>
+
+              <a href="./Al-Burhan%201.0.apk" download
+                 class="btn-shine group mt-7 inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 px-6 py-4 text-base font-semibold text-midnight-950 shadow-glow-emerald transition hover:shadow-[0_0_70px_-10px_rgba(16,185,129,0.8)]">
+                <i data-lucide="download" class="h-5 w-5"></i>
+                Download APK for Android
+                <i data-lucide="arrow-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+              </a>
+
+              <p class="mt-3 text-xs text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="file" class="inline h-3 w-3"></i>
+                File on disk: <code class="rounded bg-white/5 px-1 py-0.5">Al-Burhan 1.0.apk</code>
+                · <a class="text-emerald-300 hover:text-emerald-200 underline-offset-2 hover:underline" href="./Al-Burhan%201.0.apk" download>Direct link</a>
+              </p>
+            </div>
+
+            <!-- System requirements + install steps -->
+            <div class="space-y-4">
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-5 backdrop-blur">
+                <h4 class="flex items-center gap-2 text-sm font-semibold text-white">
+                  <i data-lucide="cpu" class="h-4 w-4 text-emerald-300"></i>
+                  System Requirements
+                </h4>
+                <ul class="mt-3 space-y-2 text-sm text-slate-300">
+                  <li class="flex items-start gap-2">
+                    <i data-lucide="check" class="mt-0.5 h-4 w-4 text-emerald-400"></i>
+                    <span>Android 8.0 (Oreo) or higher</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i data-lucide="check" class="mt-0.5 h-4 w-4 text-emerald-400"></i>
+                    <span>~80 MB free storage</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i data-lucide="check" class="mt-0.5 h-4 w-4 text-emerald-400"></i>
+                    <span>Internet optional (for AI features)</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i data-lucide="check" class="mt-0.5 h-4 w-4 text-emerald-400"></i>
+                    <span>ARM64 / x86_64 supported</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="rounded-2xl border border-white/10 bg-black/30 p-5 backdrop-blur">
+                <h4 class="flex items-center gap-2 text-sm font-semibold text-white">
+                  <i data-lucide="list-checks" class="h-4 w-4 text-gold"></i>
+                  Installation Steps
+                </h4>
+                <ol class="mt-3 space-y-2.5 text-sm text-slate-300">
+                  <li class="flex gap-3">
+                    <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-xs font-semibold text-emerald-300">1</span>
+                    <span>Download the <code class="rounded bg-white/5 px-1 text-xs">.apk</code> file using the button.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-xs font-semibold text-emerald-300">2</span>
+                    <span>Open the file from your downloads or notifications.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-xs font-semibold text-emerald-300">3</span>
+                    <span>If prompted, enable <span class="font-medium text-white">Install from unknown sources</span> for your browser.</span>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-xs font-semibold text-emerald-300">4</span>
+                    <span>Tap <span class="font-medium text-white">Install</span> and open Al-Burhan.</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="relative border-t border-white/5 py-10">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+        <div class="flex items-center gap-3">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-gold/20 ring-1 ring-white/10">
+            <i data-lucide="book-open-text" class="h-5 w-5 text-emerald-300"></i>
+          </span>
+          <div class="leading-tight">
+            <div class="font-display text-sm font-semibold text-white">Al-Burhan Quran Scholar</div>
+            <div class="text-xs text-slate-400">Deep Quranic Research, Classical Tafsirs, and Multidimensional Empirical Insights.</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="https://www.instagram.com/hamza_ahmed_0fficial?igsi=bmkwdjBwbWcxMXVl" target="_blank" rel="noopener noreferrer"
+             aria-label="Instagram"
+             class="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-pink-400/30 hover:text-pink-300">
+            <i data-lucide="instagram" class="h-4 w-4"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/hamza-ahmed-917a17224?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer"
+             aria-label="LinkedIn"
+             class="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-sky-400/30 hover:text-sky-300">
+            <i data-lucide="linkedin" class="h-4 w-4"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-slate-500 sm:flex-row">
+        <p>© 2026 Al-Burhan Quran Scholar. All rights reserved.</p>
+        <p class="flex items-center gap-1.5">
+          Built with <i data-lucide="heart" class="h-3 w-3 text-rose-400"></i> by <span class="text-slate-300 font-medium">Hamza Ahmed</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lucide icon init — robust against the UMD bundle not being ready yet -->
+  <script>
+    (function initLucide() {
+      var tries = 0;
+      function tryInit() {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          try {
+            // Pass root so re-running over already-rendered SVGs is a no-op
+            window.lucide.createIcons({ attrs: { class: 'lucide' } });
+          } catch (err) {
+            console.warn('[lucide] createIcons failed:', err);
+          }
+          return;
+        }
+        if (tries++ < 40) {           // ~2s max wait
+          setTimeout(tryInit, 50);
+        } else {
+          console.warn('[lucide] UMD bundle did not load — icons will not render.');
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', tryInit);
+      } else {
+        tryInit();
+      }
+    })();
+  </script>
+
+  <!-- Scroll reveal -->
+  <script>
+    (function initReveal() {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+</html>
