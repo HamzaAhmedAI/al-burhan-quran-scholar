@@ -12,6 +12,9 @@ Al-Burhan Quran Scholar is a scholarly Android companion that unifies:
 - **Roman Urdu & Multilingual Support** — natural translations into Roman Urdu and English.
 - **OpenRouter AI & Gemini Integration** — deep thematic exploration and smart parsing.
 - **Secure Local Database** — offline-first architecture with encrypted local storage.
+- **Student Mode** *(new in v1.1)* — guided lessons, progress tracking, quizzes, and a personal study journal.
+- **Noorani Qaida** *(new in v1.1)* — the classic beginner primer, digitized with audio recitation and Tajweed rules.
+- **Qibla Direction** *(new in v1.1)* — real-time compass to the Kaaba from anywhere in the world.
 
 **Founder & Creator:** Hamza Ahmed
 **Instagram:** [hamza_ahmed_0fficial](https://www.instagram.com/hamza_ahmed_0fficial)
