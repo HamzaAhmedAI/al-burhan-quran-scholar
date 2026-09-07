@@ -29,3 +29,6 @@ node_modules/
 server.log
 server.err
 /tmp/
+
+.vercel
+.env*
